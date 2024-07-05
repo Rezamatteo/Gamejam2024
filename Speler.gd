@@ -9,6 +9,7 @@ var dashNum := 0
 var maxDashAmt := 1
 var can_move=true
 var path=null
+var sensitivity = 3
 func _input(event):
 	path=get_parent().get_node("path")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -16,7 +17,9 @@ func _input(event):
 		neck.rotate_y(-event.relative.x*0.01)
 		cam.rotate_x(-event.relative.y*0.01)
 		cam.rotation.x=clamp(cam.rotation.x,deg_to_rad(-90),deg_to_rad(90))
+	
 	path.curve.add_point(global_position)
+	
 const SPEED = 5.0
 const JUMP_VELOCITY = 6.5
 
@@ -31,6 +34,18 @@ func dash():
 	extra_vel=lerp(extra_vel,Vector3.ZERO,0.1)
 func _physics_process(delta):
 	# Add the gravity.
+	var rota=Vector2.ZERO
+	if Input.is_action_pressed("rightStickLeft"):
+		rota.y+=1*delta
+	if Input.is_action_pressed("rightStickRight"):
+		rota.y-=1*delta
+	if Input.is_action_pressed("rightStickDown"):
+		rota.x-=0.65*delta
+	if Input.is_action_pressed("rightStickUp"):
+		rota.x+=0.65*delta
+	neck.rotate_y(rota.y*sensitivity)
+	cam.rotate_x(rota.x*sensitivity)
+	cam.rotation.x=clamp(cam.rotation.x,deg_to_rad(-90),deg_to_rad(90))
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		gravity+=0.1
