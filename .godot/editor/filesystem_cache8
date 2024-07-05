@@ -1,5 +1,8 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1720167809
+::res://::1720172454
+global.gd::GDScript::-1::1720171962::0::1::::<>Node<>::
 icon.svg::CompressedTexture2D::7100157286335076465::1720166747::1720166910::1::::<><>::
-Main.tscn::PackedScene::5294663498875677477::1720167633::0::1::::<><>::res://Speler.gd<>uid://c8fms2pnuc5np::::res://icon.svg
-Speler.gd::GDScript::-1::1720167633::0::1::::<>CharacterBody3D<>::
+Main.tscn::PackedScene::5294663498875677477::1720172390::0::1::::<><>::uid://cnppoq4tn5nnb::::res://speler.tscn
+Speler.gd::GDScript::-1::1720172385::0::1::::<>CharacterBody3D<>::
+speler.tscn::PackedScene::5717198643052455631::1720172391::0::1::::<><>::res://Speler.gd<>uid://c8fms2pnuc5np::::res://icon.svg
+_speler_.gd::GDScript::-1::1720172271::0::1::::<>PathFollow3D<>::

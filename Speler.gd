@@ -11,14 +11,14 @@ var can_move=true
 var path=null
 var sensitivity = 3
 func _input(event):
-	path=get_parent().get_node("path")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event is InputEventMouseMotion:
 		neck.rotate_y(-event.relative.x*0.01)
 		cam.rotate_x(-event.relative.y*0.01)
 		cam.rotation.x=clamp(cam.rotation.x,deg_to_rad(-90),deg_to_rad(90))
+	if !global_position in Global.points:
+		Global.points.append(global_position)
 	
-	path.curve.add_point(global_position)
 	
 const SPEED = 5.0
 const JUMP_VELOCITY = 6.5
@@ -43,9 +43,7 @@ func _physics_process(delta):
 		rota.x-=0.65*delta
 	if Input.is_action_pressed("rightStickUp"):
 		rota.x+=0.65*delta
-	neck.rotate_y(rota.y*sensitivity)
-	cam.rotate_x(rota.x*sensitivity)
-	cam.rotation.x=clamp(cam.rotation.x,deg_to_rad(-90),deg_to_rad(90))
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		gravity+=0.1
@@ -84,12 +82,9 @@ func _physics_process(delta):
 	velocity+=Vector3(extra_vel.x,0,extra_vel.z)
 	
 		
-	if !can_move:
-		velocity.x=0
-		velocity.z=0
-		hide()
-		neck.show()
-		neck.global_position.x=move_toward(neck.global_position.x,path.get_node("_speler_").get_node("mesh").global_position.x,3)
-		neck.global_position.y=move_toward(neck.global_position.y,path.get_node("_speler_").get_node("mesh").global_position.y,3)
-		neck.global_position.z=move_toward(neck.global_position.z,path.get_node("_speler_").get_node("mesh").global_position.z,3)
+	
 	move_and_slide()
+
+
+func _on_end_body_entered(body):
+	get_tree().change_scene_to_file("res://robot.tscn")

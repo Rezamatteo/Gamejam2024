@@ -1,3 +1,6 @@
 res://Main.tscn
 res://Speler.gd
 res://_speler_.gd
+res://global.gd
+res://robot.tscn
+res://speler.tscn
