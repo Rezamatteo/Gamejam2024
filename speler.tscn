@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnppoq4tn5nnb"]
+
+[ext_resource type="Script" path="res://Speler.gd" id="1_uj8yb"]
+[ext_resource type="Texture2D" uid="uid://c8fms2pnuc5np" path="res://icon.svg" id="2_u4rtl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3xl8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_remm8"]
+no_depth_test = true
+shading_mode = 0
+
+[node name="Speler" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.60858, 0)
+collision_layer = 2
+script = ExtResource("1_uj8yb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_p3xl8")
+
+[node name="neck" type="Node3D" parent="."]
+
+[node name="cam" type="Camera3D" parent="neck"]
+
+[node name="dashSprite" type="Sprite3D" parent="neck/cam"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+visible = false
+material_override = SubResource("StandardMaterial3D_remm8")
+texture = ExtResource("2_u4rtl")

@@ -7,6 +7,7 @@ var extraVelMulti =15
 var jumped=0
 var dashNum := 0
 var maxDashAmt := 1
+var can_move=true
 var path=null
 func _input(event):
 	path=get_parent().get_node("path")
@@ -66,5 +67,14 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	extra_vel=lerp(extra_vel,Vector3.ZERO,0.1)
 	velocity+=Vector3(extra_vel.x,0,extra_vel.z)
+	
+		
+	if !can_move:
+		velocity.x=0
+		velocity.z=0
+		hide()
+		neck.show()
+		neck.global_position.x=move_toward(neck.global_position.x,path.get_node("_speler_").get_node("mesh").global_position.x,3)
+		neck.global_position.y=move_toward(neck.global_position.y,path.get_node("_speler_").get_node("mesh").global_position.y,3)
+		neck.global_position.z=move_toward(neck.global_position.z,path.get_node("_speler_").get_node("mesh").global_position.z,3)
 	move_and_slide()
-

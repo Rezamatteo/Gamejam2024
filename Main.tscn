@@ -1,7 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://cho1lmoakr5d6"]
+[gd_scene load_steps=13 format=3 uid="uid://cho1lmoakr5d6"]
 
-[ext_resource type="Script" path="res://Speler.gd" id="1_4pioh"]
-[ext_resource type="Texture2D" uid="uid://c8fms2pnuc5np" path="res://icon.svg" id="2_dm4jw"]
+[ext_resource type="PackedScene" uid="uid://cnppoq4tn5nnb" path="res://speler.tscn" id="1_w5y0l"]
 [ext_resource type="Script" path="res://_speler_.gd" id="3_gend6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dkvmd"]
@@ -16,12 +15,6 @@ background_mode = 2
 sky = SubResource("Sky_nps2c")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3xl8"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_remm8"]
-no_depth_test = true
-shading_mode = 0
 
 [sub_resource type="Curve3D" id="Curve3D_avsxv"]
 
@@ -67,6 +60,9 @@ _data = {
 "progress": SubResource("Animation_qwpj5")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_esckj"]
+size = Vector3(14.7265, 6.35461, 2.54602)
+
 [node name="main" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -83,23 +79,7 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1427, -0.384827, -0.0916748)
 size = Vector3(14.7297, 0.230347, 19.6687)
 
-[node name="Speler" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.60858, 0)
-collision_layer = 2
-script = ExtResource("1_4pioh")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Speler"]
-shape = SubResource("CapsuleShape3D_p3xl8")
-
-[node name="neck" type="Node3D" parent="Speler"]
-
-[node name="cam" type="Camera3D" parent="Speler/neck"]
-
-[node name="dashSprite" type="Sprite3D" parent="Speler/neck/cam"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
-visible = false
-material_override = SubResource("StandardMaterial3D_remm8")
-texture = ExtResource("2_dm4jw")
+[node name="Speler" parent="." instance=ExtResource("1_w5y0l")]
 
 [node name="path" type="Path3D" parent="."]
 curve = SubResource("Curve3D_avsxv")
@@ -108,7 +88,7 @@ curve = SubResource("Curve3D_avsxv")
 transform = Transform3D(-0.999256, 0.00525037, -0.0382113, -4.65661e-10, 0.990692, 0.136125, 0.0385703, 0.136023, -0.989955, 1.02267, 4.91391, -9.07427)
 script = ExtResource("3_gend6")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="path/_speler_"]
+[node name="mesh" type="MeshInstance3D" parent="path/_speler_"]
 transform = Transform3D(1, -2.79397e-09, 0, -2.79397e-09, 1, 0, 2.23517e-08, 0, 1, 0, 0, 0)
 mesh = SubResource("SphereMesh_4ioal")
 
@@ -122,4 +102,14 @@ libraries = {
 one_shot = true
 autostart = true
 
+[node name="end" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10286, 7.8107)
+collision_layer = 3
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="end"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.194244, 0.638245, 0.77301)
+shape = SubResource("BoxShape3D_esckj")
+
 [connection signal="timeout" from="path/_speler_/time" to="path/_speler_" method="_on_timer_timeout"]
+[connection signal="body_entered" from="end" to="path/_speler_" method="_on_end_body_entered"]
