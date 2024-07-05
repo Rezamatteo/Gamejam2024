@@ -15,7 +15,7 @@ func _input(event):
 		neck.rotate_y(-event.relative.x*0.01)
 		cam.rotate_x(-event.relative.y*0.01)
 		cam.rotation.x=clamp(cam.rotation.x,deg_to_rad(-90),deg_to_rad(90))
-	path.curve.add_point(global_transform.origin)
+	path.curve.add_point(global_position)
 const SPEED = 5.0
 const JUMP_VELOCITY = 6.5
 

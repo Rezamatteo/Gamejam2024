@@ -25,11 +25,11 @@ shading_mode = 0
 
 [sub_resource type="Curve3D" id="Curve3D_avsxv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbjcs"]
-albedo_color = Color(0, 1, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2qj"]
+albedo_color = Color(0, 0, 1, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_blk0p"]
-material = SubResource("StandardMaterial3D_mbjcs")
+[sub_resource type="SphereMesh" id="SphereMesh_4ioal"]
+material = SubResource("StandardMaterial3D_3v2qj")
 
 [sub_resource type="Animation" id="Animation_qwpj5"]
 resource_name = "progress"
@@ -110,7 +110,7 @@ script = ExtResource("3_gend6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="path/_speler_"]
 transform = Transform3D(1, -2.79397e-09, 0, -2.79397e-09, 1, 0, 2.23517e-08, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_blk0p")
+mesh = SubResource("SphereMesh_4ioal")
 
 [node name="play" type="AnimationPlayer" parent="path/_speler_"]
 root_node = NodePath("../../..")
