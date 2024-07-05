@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://cho1lmoakr5d6"]
+
+[ext_resource type="Script" path="res://Speler.gd" id="1_4pioh"]
+[ext_resource type="Texture2D" uid="uid://c8fms2pnuc5np" path="res://icon.svg" id="2_dm4jw"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dkvmd"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_nps2c"]
+sky_material = SubResource("ProceduralSkyMaterial_dkvmd")
+
+[sub_resource type="Environment" id="Environment_5aqw4"]
+background_mode = 2
+sky = SubResource("Sky_nps2c")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3xl8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_remm8"]
+no_depth_test = true
+shading_mode = 0
+
+[sub_resource type="Curve3D" id="Curve3D_avsxv"]
+
+[node name="main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5aqw4")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1427, -0.384827, -0.0916748)
+size = Vector3(14.7297, 0.230347, 19.6687)
+
+[node name="Speler" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.60858, 0)
+collision_layer = 2
+script = ExtResource("1_4pioh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Speler"]
+shape = SubResource("CapsuleShape3D_p3xl8")
+
+[node name="neck" type="Node3D" parent="Speler"]
+
+[node name="cam" type="Camera3D" parent="Speler/neck"]
+
+[node name="dashSprite" type="Sprite3D" parent="Speler/neck/cam"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+visible = false
+material_override = SubResource("StandardMaterial3D_remm8")
+texture = ExtResource("2_dm4jw")
+
+[node name="path" type="Path3D" parent="."]
+curve = SubResource("Curve3D_avsxv")
