@@ -20,4 +20,6 @@ func _on_end_body_entered(body):
 	print(play.speed_scale," ",secondsElapsed)
 	time.queue_free()
 	play.play("progress")
+	await play.animation_finished
+	get_tree().quit()
 

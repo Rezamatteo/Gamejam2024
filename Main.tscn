@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cho1lmoakr5d6"]
+[gd_scene load_steps=16 format=3 uid="uid://cho1lmoakr5d6"]
 
 [ext_resource type="PackedScene" uid="uid://cnppoq4tn5nnb" path="res://speler.tscn" id="1_w5y0l"]
 [ext_resource type="Script" path="res://_speler_.gd" id="3_gend6"]
@@ -61,7 +61,28 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_esckj"]
-size = Vector3(14.7265, 6.35461, 2.54602)
+size = Vector3(15, 6, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k11ce"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yi30f"]
+next_pass = SubResource("StandardMaterial3D_k11ce")
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r0s1n"]
+material = SubResource("StandardMaterial3D_yi30f")
+size = Vector3(15, 6, 3)
 
 [node name="main" type="Node3D"]
 
@@ -110,6 +131,10 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="end"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.194244, 0.638245, 0.77301)
 shape = SubResource("BoxShape3D_esckj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="end"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.630856, 0.786283)
+mesh = SubResource("BoxMesh_r0s1n")
 
 [connection signal="timeout" from="path/_speler_/time" to="path/_speler_" method="_on_timer_timeout"]
 [connection signal="body_entered" from="end" to="path/_speler_" method="_on_end_body_entered"]

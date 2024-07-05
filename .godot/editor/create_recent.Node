@@ -1,8 +1,8 @@
+MeshInstance3D
 CollisionShape3D
 Area3D
 Timer
 AnimationPlayer
-MeshInstance3D
 PathFollow3D
 Path3D
 Sprite3D
