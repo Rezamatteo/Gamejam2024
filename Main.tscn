@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cho1lmoakr5d6"]
+[gd_scene load_steps=15 format=3 uid="uid://cho1lmoakr5d6"]
 
 [ext_resource type="Script" path="res://Speler.gd" id="1_4pioh"]
 [ext_resource type="Texture2D" uid="uid://c8fms2pnuc5np" path="res://icon.svg" id="2_dm4jw"]
+[ext_resource type="Script" path="res://_speler_.gd" id="3_gend6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dkvmd"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -23,6 +24,49 @@ no_depth_test = true
 shading_mode = 0
 
 [sub_resource type="Curve3D" id="Curve3D_avsxv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbjcs"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_blk0p"]
+material = SubResource("StandardMaterial3D_mbjcs")
+
+[sub_resource type="Animation" id="Animation_qwpj5"]
+resource_name = "progress"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("path/_speler_:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_x4w1c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("path/_speler_:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e26f6"]
+_data = {
+"RESET": SubResource("Animation_x4w1c"),
+"progress": SubResource("Animation_qwpj5")
+}
 
 [node name="main" type="Node3D"]
 
@@ -60,3 +104,17 @@ texture = ExtResource("2_dm4jw")
 
 [node name="path" type="Path3D" parent="."]
 curve = SubResource("Curve3D_avsxv")
+
+[node name="_speler_" type="PathFollow3D" parent="path"]
+transform = Transform3D(-0.999256, 0.00525037, -0.0382113, -4.65661e-10, 0.990692, 0.136125, 0.0385703, 0.136023, -0.989955, 1.02267, 4.91391, -9.07427)
+script = ExtResource("3_gend6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="path/_speler_"]
+transform = Transform3D(1, -2.79397e-09, 0, -2.79397e-09, 1, 0, 2.23517e-08, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_blk0p")
+
+[node name="play" type="AnimationPlayer" parent="path/_speler_"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_e26f6")
+}
